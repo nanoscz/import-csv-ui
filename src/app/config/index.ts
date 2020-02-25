@@ -14,6 +14,8 @@ export const Settings = {
       question01: 'Pregunta 1',
       question02: 'Pregunta 2',
       question03: 'Pregunta 3',
+      question04: 'Pregunta 4',
+      question05: 'Pregunta 5',
       points: 'Puntos',
       anxiety: 'Ansiedad'
     }
@@ -25,7 +27,7 @@ export const Questionnaire = [
     question1: {
       code: 1,
       type: false,
-      index: 13,
+      index: 15,
       question: 'Me siento bien',
     }
   },
@@ -33,7 +35,7 @@ export const Questionnaire = [
     question2: {
       code: 2,
       type: true,
-      index: 14,
+      index: 16,
       question: 'Me canso rápindexamente'
     }
   },
@@ -41,7 +43,7 @@ export const Questionnaire = [
     question3: {
       code: 3,
       type: true,
-      index: 15,
+      index: 17,
       question: 'Siento ganas de llorar'
     }
   },
@@ -49,7 +51,7 @@ export const Questionnaire = [
     question4: {
       code: 4,
       type: true,
-      index: 16,
+      index: 18,
       question: 'Quisiera ser tan feliz como otros parecen serlo'
     }
   },
@@ -57,7 +59,7 @@ export const Questionnaire = [
     question5: {
       code: 5,
       type: true,
-      index: 17,
+      index: 19,
       question: 'Me pierdo cosas por no poder decindexirme rápindexamente'
     }
   },
@@ -65,7 +67,7 @@ export const Questionnaire = [
     question6: {
       code: 6,
       type: false,
-      index: 18,
+      index: 20,
       question: 'Me siento descansado'
     }
   },
@@ -73,7 +75,7 @@ export const Questionnaire = [
     question7: {
       code: 7,
       type: false,
-      index: 19,
+      index: 21,
       question: 'Soy una persona “tranquila serena y sosegada'
     }
   },
@@ -81,7 +83,7 @@ export const Questionnaire = [
     question8: {
       code: 8,
       type: true,
-      index: 20,
+      index: 22,
       question: 'Siento que las dificultades se me amontonan al punto de no poder superarlas'
     }
   },
@@ -89,7 +91,7 @@ export const Questionnaire = [
     question9: {
       code: 9,
       type: true,
-      index: 21,
+      index: 23,
       question: 'Me preocupo demasiado por cosas sin importancia'
     }
   },
@@ -97,7 +99,7 @@ export const Questionnaire = [
     question10: {
       code: 10,
       type: false,
-      index: 22,
+      index: 24,
       question: 'Soy feliz '
     }
   },
@@ -105,7 +107,7 @@ export const Questionnaire = [
     question11: {
       code: 11,
       type: true,
-      index: 23,
+      index: 25,
       question: 'Tomo las cosas muy a pecho'
     }
   },
@@ -113,7 +115,7 @@ export const Questionnaire = [
     question12: {
       code: 12,
       type: true,
-      index: 24,
+      index: 26,
       question: 'Me falta confianza en mí mismo'
     }
   },
@@ -121,7 +123,7 @@ export const Questionnaire = [
     question13: {
       code: 13,
       type: false,
-      index: 25,
+      index: 27,
       question: 'Me siento seguro'
     }
   },
@@ -129,7 +131,7 @@ export const Questionnaire = [
     question14: {
       code: 14,
       type: true,
-      index: 26,
+      index: 28,
       question: 'Trato de evitar enfrentar una crisis o dificultad'
     }
   },
@@ -137,7 +139,7 @@ export const Questionnaire = [
     question15: {
       code: 15,
       type: false,
-      index: 27,
+      index: 29,
       question: 'Me siento melancólico'
     }
   },
@@ -145,7 +147,7 @@ export const Questionnaire = [
     question16: {
       code: 16,
       type: true,
-      index: 28,
+      index: 30,
       question: 'Me siento satisfecho'
     }
   },
@@ -153,15 +155,15 @@ export const Questionnaire = [
     question17: {
       code: 17,
       type: true,
-      index: 29,
-      question: 'Algunas indexeas poco importantes pasan por mi cabeza y me molestan'
+      index: 31,
+      question: 'Algunas ideas poco importantes pasan por mi cabeza y me molestan'
     }
   },
   {
     question18: {
       code: 18,
       type: true,
-      index: 30,
+      index: 32,
       question: 'Me afectan tanto los desengaños que no me los puedo quitar de la cabeza'
     }
   },
@@ -169,7 +171,7 @@ export const Questionnaire = [
     question19: {
       code: 19,
       type: false,
-      index: 31,
+      index: 33,
       question: 'Soy una persona estable'
     }
   },
@@ -177,7 +179,7 @@ export const Questionnaire = [
     question20: {
       code: 20,
       type: true,
-      index: 32,
+      index: 34,
       question: 'Cuando pienso en los asuntos que tengo entre manos me pongo tenso y alterado'
     }
   }
