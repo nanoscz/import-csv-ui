@@ -17,7 +17,7 @@ export class AppComponent {
               semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`;
   file: any;
   displayedColumns: string[] = DataKeyDemographicSocio;
-  dataSource: Array<DemographicSocioData>;
+  dataSource: Array<DemographicSocioData> = [];
 
   constructor() {}
 
