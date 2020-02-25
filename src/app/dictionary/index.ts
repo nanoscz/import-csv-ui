@@ -11,3 +11,11 @@ export enum REVERSE_IDARE {
   'FRECUENTEMENTE' = 2,
   'CASI SIEMPRE' = 1
 }
+
+export enum CASIT {
+  'nunca o casi nunca' = 1,
+  'algunas veces' = 2,
+  'la mitad de las veces' = 3,
+  'bastantes veces' = 4,
+  'siempre o casi siempre' = 5
+}
