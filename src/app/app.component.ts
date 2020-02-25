@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { DemographicSocioData } from './models';
+import { Settings } from './config';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ export class AppComponent {
               eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate 
               semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`;
   file: any;
+  demographicSocioHeader = Settings.fichas.demographicSocioHeader;
   fichas: Array<DemographicSocioData>
   constructor() { }
 
