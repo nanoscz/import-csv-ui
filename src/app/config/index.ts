@@ -22,6 +22,21 @@ export const Settings = {
   }
 }
 
+function getValueObject(object) {
+  let display = []
+  for (const key in object) {
+    if (object.hasOwnProperty(key)) {
+      const element = object[key];
+      display.push(element)
+    }
+  }
+  return display;
+}
+
+export const DataValueDemographicSocio = getValueObject(Settings.fichas.demographicSocioHeader);
+
+export const DataKeyDemographicSocio = Object.keys(Settings.fichas.demographicSocioHeader);
+
 export const Questionnaire = [
   {
     question1: {

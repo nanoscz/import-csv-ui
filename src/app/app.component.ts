@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { DemographicSocioData } from './models';
-import { Settings, Questionnaire } from './config';
+import { Questionnaire, DataKeyDemographicSocio } from './config';
 import { IDARE, REVERSE_IDARE } from './dictionary';
 
 @Component({
@@ -16,8 +16,9 @@ export class AppComponent {
               eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate 
               semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`;
   file: any;
-  demographicSocioHeader = Settings.fichas.demographicSocioHeader;
-  fichas: Array<DemographicSocioData>
+  displayedColumns: string[] = DataKeyDemographicSocio;
+  dataSource: Array<DemographicSocioData>;
+
   constructor() {}
 
   isValidCSVFile(file: any) {
@@ -40,9 +41,8 @@ export class AppComponent {
         const csvData = reader.result;
         let csvRecordsArray:any = (<string>csvData).split(/\r\n|\n/);
         csvRecordsArray.splice(0, 1);
-        this.fichas = this.getDataDemographicSocioArrayFromCSVFile(csvRecordsArray);
-        this.fichas = this.assessAnxiety(this.fichas);
-        console.log(this.fichas)
+        this.dataSource = this.getDataDemographicSocioArrayFromCSVFile(csvRecordsArray);
+        this.dataSource = this.assessAnxiety(this.dataSource);
       };
       reader.onerror = function () {
         console.log('error is occured while reading file!');
@@ -132,6 +132,6 @@ export class AppComponent {
 
   fileReset() {
     this.csvReader.nativeElement.value = "";
-    this.fichas = []
+    this.dataSource  = []
   }
 }

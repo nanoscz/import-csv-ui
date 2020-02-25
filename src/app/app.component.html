@@ -1,16 +1,9 @@
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a class="navbar-item" href="https://bulma.io">
-      <img src="https://bulma.io/images/bulma-logo.png"
-        alt="Bulma: Free, open source, and modern CSS framework based on Flexbox" width="112" height="28">
-    </a>
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-</nav>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Import CSV - UI</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+
 <div class="container">
   <div class="content">
     <section>
@@ -46,65 +39,98 @@
     <section>
       <strong>Resultados del archivo.</strong>
       <div class="table-container">
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-          <thead>
-            <tr>
-              <th>{{demographicSocioHeader.date}}</th>
-              <th>{{demographicSocioHeader.fullName}}</th>
-              <th>{{demographicSocioHeader.age}}</th>
-              <th>{{demographicSocioHeader.gender}}</th>
-              <th>{{demographicSocioHeader.ci}}</th>
-              <th>{{demographicSocioHeader.occupation}}</th>
-              <th>{{demographicSocioHeader.study}}</th>
-              <th>{{demographicSocioHeader.maritalStatus}}</th>
-              <th>{{demographicSocioHeader.economy}}</th>
-              <th>{{demographicSocioHeader.numberOfChildren}}</th>
-              <th>{{demographicSocioHeader.question01}}</th>
-              <th>{{demographicSocioHeader.question02}}</th>
-              <th>{{demographicSocioHeader.question03}}</th>
-              <th>{{demographicSocioHeader.points}}</th>
-              <th>{{demographicSocioHeader.anxiety}}</th>
-            </tr>
-          </thead>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <!-- Position Column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+          </ng-container>
 
-          <tbody>
-            <tr *ngFor="let ficha of fichas">
-              <td>{{ficha.date}}</td>
-              <td>{{ficha.fullName}}</td>
-              <td>{{ficha.age}}</td>
-              <td>{{ficha.gender}}</td>
-              <td>{{ficha.ci}}</td>
-              <td>{{ficha.occupation}}</td>
-              <td>{{ficha.study}}</td>
-              <td>{{ficha.maritalStatus}}</td>
-              <td>{{ficha.economy }}</td>
-              <td>{{ficha.numberOfChildren}}</td>
-              <td>{{ficha.question01}}</td>
-              <td>{{ficha.question02}}</td>
-              <td>{{ficha.question03}}</td>
-              <td>{{ficha.points}}</td>
-              <td>{{ficha.points|calculateAnxiety}}</td>
-            </tr>
-          </tbody>
+          <ng-container matColumnDef="fullName">
+            <th mat-header-cell *matHeaderCellDef> fullName </th>
+            <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="age">
+            <th mat-header-cell *matHeaderCellDef> age </th>
+            <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="gender">
+            <th mat-header-cell *matHeaderCellDef> gender </th>
+            <td mat-cell *matCellDef="let element"> {{element.gender}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="ci">
+            <th mat-header-cell *matHeaderCellDef> ci </th>
+            <td mat-cell *matCellDef="let element"> {{element.ci}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="occupation">
+            <th mat-header-cell *matHeaderCellDef> occupation </th>
+            <td mat-cell *matCellDef="let element"> {{element.occupation}} </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="study">
+            <th mat-header-cell *matHeaderCellDef> study </th>
+            <td mat-cell *matCellDef="let element"> {{element.study}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="maritalStatus">
+            <th mat-header-cell *matHeaderCellDef> maritalStatus </th>
+            <td mat-cell *matCellDef="let element"> {{element.maritalStatus}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="economy">
+            <th mat-header-cell *matHeaderCellDef> economy </th>
+            <td mat-cell *matCellDef="let element"> {{element.economy}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="numberOfChildren">
+            <th mat-header-cell *matHeaderCellDef> numberOfChildren </th>
+            <td mat-cell *matCellDef="let element"> {{element.numberOfChildren}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="question01">
+            <th mat-header-cell *matHeaderCellDef> question01 </th>
+            <td mat-cell *matCellDef="let element"> {{element.question01}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="question02">
+            <th mat-header-cell *matHeaderCellDef> question02 </th>
+            <td mat-cell *matCellDef="let element"> {{element.question02}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="question03">
+            <th mat-header-cell *matHeaderCellDef> question03 </th>
+            <td mat-cell *matCellDef="let element"> {{element.question03}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="question04">
+            <th mat-header-cell *matHeaderCellDef> question04 </th>
+            <td mat-cell *matCellDef="let element"> {{element.question04}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="question05">
+            <th mat-header-cell *matHeaderCellDef> question05 </th>
+            <td mat-cell *matCellDef="let element"> {{element.question05}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="points">
+            <th mat-header-cell *matHeaderCellDef> points </th>
+            <td mat-cell *matCellDef="let element"> {{element.points}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="anxiety">
+            <th mat-header-cell *matHeaderCellDef> anxiety </th>
+            <td mat-cell *matCellDef="let element"> {{element.points|calculateAnxiety}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
       </div>
       <br>
-    </section>
-    <section>
-      <strong>Resultados del archivo.</strong>
-      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-        <thead>
-          <tr>
-            <th>Padres</th>
-            <th>Bajo</th>
-            <th>Medio</th>
-            <th>Alto</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- data -->
-        </tbody>
-      </table>
     </section>
   </div>
 </div>
