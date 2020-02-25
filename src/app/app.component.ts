@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { DemographicSocioData } from './models/class';
+import { DemographicSocioData } from './models';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +8,7 @@ import { DemographicSocioData } from './models/class';
 })
 export class AppComponent {
   @ViewChild('csvReader') csvReader: any;
+
   title = 'import-csv-ui';
   subtitle = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices 
               eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate 
