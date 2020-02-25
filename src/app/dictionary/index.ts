@@ -1,0 +1,13 @@
+export enum IDARE {
+  'CASI NUNCA' = 1,
+  'ALGUNAS VECES' = 2,
+  'FRECUENTEMENTE' = 3,
+  'CASI SIEMPRE' = 4
+};
+
+export enum REVERSE_IDARE {
+  'CASI NUNCA' = 4,
+  'ALGUNAS VECES' = 3,
+  'FRECUENTEMENTE' = 2,
+  'CASI SIEMPRE' = 1
+};
