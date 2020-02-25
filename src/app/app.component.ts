@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { DemographicSocioData } from './models';
-import { Questionnaire, DataKeyDemographicSocio } from './config';
-import { IDARE, REVERSE_IDARE } from './dictionary';
+import { DemographicSocioData, DataCasit } from './models';
+import { QUESTIONNAIRE_IDARE, DataKeyDemographicSocio, QUESTIONNAIRE_CASIT } from './config';
+import { IDARE, REVERSE_IDARE, FILETYPE, CASIT } from './dictionary';
 
 @Component({
   selector: 'app-root',
@@ -19,8 +19,9 @@ export class AppComponent {
   displayedColumns: string[] = DataKeyDemographicSocio;
   dataSourceParent: Array<DemographicSocioData> = [];
   dataSourceChildren: Array<any> = [];
+  dataSourceAll: Array<any> = [];
 
-  constructor() { }
+  constructor() {}
 
   isValidCSVFile(file: any) {
     return file.name.endsWith('.csv');
@@ -60,14 +61,73 @@ export class AppComponent {
 
     if (this.isValidCSVFile(fileParent)) {
       this.dataSourceParent = await this.readFileParent(fileParent) as any;
-
+      this.dataSourceChildren = await this.readFileChildren(fileChildren) as any;
+      this.dataSourceAll = this.matchData(this.dataSourceParent, this.dataSourceChildren);
+      console.log(this.dataSourceParent);
+      console.log(this.dataSourceChildren);
+      console.log(this.dataSourceAll);
     } else {
       alert('Please import valid .csv file.');
       this.fileReset();
     }
   }
 
-  readFileParent(fileParent) {
+  matchData(dataSourceParent: Array<any>, dataSourceChildren: Array<any>) {
+    let dataAll = []
+    
+    dataAll = dataSourceParent.map(parent => {
+      // console.log(parent)
+      let children = dataSourceChildren.filter(children => parent.ci == children.ci);
+      // console.log(children);
+      parent.children = children;
+      return parent;
+    });
+
+    return dataAll;
+  }
+
+  readFileChildren(fileChildren) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsText(fileChildren);
+      reader.onload = () => {
+        const csvData = reader.result;
+        let fileResult = null;
+        const csvRecordsArray: any = (csvData as string).split(/\r\n|\n/);
+        csvRecordsArray.splice(0, 1);
+        fileResult = this.getDataCASITFromCSVFile(csvRecordsArray);
+        resolve(fileResult);
+      };
+      reader.onerror = function () {
+        const msg = 'error is occured while reading file children!';
+        console.error(msg);
+        reject(msg);
+      };
+    });
+  }
+
+  getDataCASITFromCSVFile(csvRecordsArray: any) {
+    let dataCasit: Array<DataCasit>;
+    dataCasit = csvRecordsArray.map(item => {
+      const ficha = (item as string).split(',');
+      const currentFicha = ficha.map(item => item.replace(/(")/g, ''));
+      return {
+        date: currentFicha[0].trim(),
+        parent: currentFicha[1].trim(),
+        ci: parseInt(currentFicha[2].trim()),
+        fullName: currentFicha[3].trim(),
+        age: currentFicha[4].trim(),
+        gender: currentFicha[5].trim(),
+        course: currentFicha[6].trim(),
+        question01: currentFicha[7].trim(),
+        questionnaire: this.generateQuestions(currentFicha, QUESTIONNAIRE_CASIT, FILETYPE.children)
+      };
+    });
+    return dataCasit;
+  }
+  
+
+  readFileParent(fileParent: any) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsText(fileParent);
@@ -78,11 +138,10 @@ export class AppComponent {
         csvRecordsArray.splice(0, 1);
         fileResult = this.getDataIDAREFromCSVFile(csvRecordsArray);
         fileResult = this.assessAnxiety(fileResult);
-        console.log('dataResourceParent', fileResult);
         resolve(fileResult);
       };
-      reader.onerror = function() {
-        const msg = 'error is occured while reading file!';
+      reader.onerror = function () {
+        const msg = 'error is occured while reading file parent!';
         console.error(msg);
         reject(msg);
       };
@@ -130,27 +189,39 @@ export class AppComponent {
         question03: currentFicha[12].trim(),
         question04: currentFicha[13].trim(),
         question05: currentFicha[14].trim(),
-        questionnaire: this.generateQuestions(currentFicha)
+        questionnaire: this.generateQuestions(currentFicha, QUESTIONNAIRE_IDARE, FILETYPE.parent)
       };
     });
     return demographicSocioData;
   }
 
-  generateQuestions(ficha: any) {
+  generateQuestions(ficha: any, questionnaire: any, fileType: any) {
     let answers = [];
-    answers = Questionnaire.map((question, idx) => {
+    answers = questionnaire.map((question, idx) => {
       const i = idx + 1;
+      let point = null;
       const index = question[`question${i}`].index;
       const reply = ficha[index];
       const type = question[`question${i}`].type;
       const code = question[`question${i}`].code;
+      switch (fileType) {
+        case 0:
+          point = type ? IDARE[reply] : REVERSE_IDARE[reply];
+          break;
+        case 1:
+          point = CASIT[reply];
+          break;
+        default:
+          alert('Error Type File.')
+          break;
+      }
       return {
         code,
         index,
         reply,
+        point,
         verify: i === code ? 'success' : 'fail',
         question: question[`question${i}`].question,
-        point: type ? IDARE[reply] : REVERSE_IDARE[reply]
       };
     });
     return answers;
