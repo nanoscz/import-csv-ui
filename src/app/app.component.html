@@ -14,12 +14,13 @@
   </section>
   <section>
     <mat-card>
-      <mat-card-title>Selecciona un archivo</mat-card-title>
+      <mat-card-title>Seleccionar archivos </mat-card-title>
+      <mat-card-subtitle>Solo debe seleccionar dos archivos.</mat-card-subtitle>
       <mat-card-content>
         <div class="file">
           <label class="file-label">
             <input class="file-input" #csvReader type="file" name="Upload CSV" (change)="uploadListener($event)"
-              accept=".csv">
+              accept=".csv" multiple>
             <span class="file-cta">
               <span class="file-icon">
                 <i class="fas fa-upload"></i>
@@ -47,8 +48,8 @@
         Resultado del Excel
       </mat-card-title>
       <mat-card-content>
-        <div class="example-container mat-elevation-z8" *ngIf="dataSource.length > 0">
-          <table mat-table [dataSource]="dataSource">
+        <div class="example-container mat-elevation-z8" *ngIf="dataSourceParent.length > 0">
+          <table mat-table [dataSource]="dataSourceParent">
             <!-- Position Column -->
             <ng-container matColumnDef="date">
               <th mat-header-cell *matHeaderCellDef> Fecha </th>
@@ -139,7 +140,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
         </div>
-        <div *ngIf="dataSource.length === 0">
+        <div *ngIf="dataSourceParent.length === 0">
           No hay Datos
         </div>
       </mat-card-content>

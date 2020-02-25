@@ -17,41 +17,76 @@ export class AppComponent {
               semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`;
   file: any;
   displayedColumns: string[] = DataKeyDemographicSocio;
-  dataSource: Array<DemographicSocioData> = [];
+  dataSourceParent: Array<DemographicSocioData> = [];
+  dataSourceChildren: Array<any> = [];
 
-  constructor() {}
+  constructor() { }
 
   isValidCSVFile(file: any) {
-
     return file.name.endsWith(".csv");
   }
 
-  setFileData(file: any) {
+  getFileData(file: any) {
     this.file = file;
   }
 
-  uploadListener($event) {
-    const files = $event.srcElement.files;
-    this.setFileData(files[0]);
-    if (this.isValidCSVFile(files[0])) {
-      const input = $event.target;
-      const reader = new FileReader();
-      reader.readAsText(input.files[0]);
-      reader.onload = () => {
-        const csvData = reader.result;
-        let csvRecordsArray:any = (<string>csvData).split(/\r\n|\n/);
-        csvRecordsArray.splice(0, 1);
-        this.dataSource = this.getDataDemographicSocioArrayFromCSVFile(csvRecordsArray);
-        this.dataSource = this.assessAnxiety(this.dataSource);
-      };
-      reader.onerror = function () {
-        console.log('error is occured while reading file!');
-      };
+  getFatherAndSonFiles(object: any) {
+    let fileParent = null;
+    let fileChildren = null;
 
+    for (const key in object) {
+      if (object.hasOwnProperty(key)) {
+        const element = object[key];
+        if (element.name.includes('IDARE')) {
+          fileParent = element;
+        }
+        if (element.name.includes('CASIT')) {
+          fileChildren = element;
+        }
+      }
+    }
+    return [fileParent, fileChildren];
+  }
+
+  async uploadListener($event) {
+    const files = $event.srcElement.files;
+    if (files.length > 2) {
+      alert("Solo se debe cargar dos archivos.");
+      this.fileReset();
+      return;
+    };
+    const [fileParent, fileChildren] = this.getFatherAndSonFiles(files);
+    this.getFileData(fileParent);
+
+    if (this.isValidCSVFile(fileParent)) {
+      this.dataSourceParent = await <any>this.readFileParent(fileParent);
+      
     } else {
       alert("Please import valid .csv file.");
       this.fileReset();
     }
+  }
+
+  readFileParent(fileParent) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsText(fileParent);
+      reader.onload = () => {
+        const csvData = reader.result;
+        let fileResult = null;
+        let csvRecordsArray: any = (<string>csvData).split(/\r\n|\n/);
+        csvRecordsArray.splice(0, 1);
+        fileResult = this.getDataIDAREFromCSVFile(csvRecordsArray);
+        fileResult = this.assessAnxiety(fileResult);
+        console.log('dataResourceParent',fileResult);
+        resolve(fileResult);
+      };
+      reader.onerror = function () {
+        const msg = 'error is occured while reading file!';
+        console.error(msg);
+        reject(msg)
+      };
+    });
   }
 
   getQuestionnaireResult(questionnaire: any) {
@@ -60,10 +95,10 @@ export class AppComponent {
       return accumulator + currentValue;
     });
   }
-  
+
   assessAnxiety(fichas: any) {
     const data = fichas.map(data => {
-      let newData = {...data};
+      let newData = { ...data };
       newData.points = this.getQuestionnaireResult(newData.questionnaire);
       return newData;
     });
@@ -74,7 +109,7 @@ export class AppComponent {
     return headerArray.splice(0, 9);
   }
 
-  getDataDemographicSocioArrayFromCSVFile(csvRecordsArray: any) {
+  getDataIDAREFromCSVFile(csvRecordsArray: any) {
     let demographicSocioData: Array<DemographicSocioData>;
     demographicSocioData = csvRecordsArray.map(item => {
       const ficha = (<string>item).split(',');
@@ -132,6 +167,6 @@ export class AppComponent {
 
   fileReset() {
     this.csvReader.nativeElement.value = "";
-    this.dataSource  = []
+    this.dataSourceParent = []
   }
 }
