@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { CalculateAnxietyPipe } from './pipes/calculate-anxiety.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material/material.module';
-
+import { NgxJsonViewerModule } from 'ngx-json-viewer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,7 +14,8 @@ import { MaterialModule } from './material/material/material.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    NgxJsonViewerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
