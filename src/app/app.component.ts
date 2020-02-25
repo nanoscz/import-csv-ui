@@ -93,6 +93,8 @@ export class AppComponent {
         question01: currentFicha[10].trim(),
         question02: currentFicha[11].trim(),
         question03: currentFicha[12].trim(),
+        question04: currentFicha[13].trim(),
+        question05: currentFicha[14].trim(),
         questionnaire: this.generateQuestions(currentFicha)
       }
     });
