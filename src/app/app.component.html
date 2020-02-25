@@ -35,7 +35,7 @@
       </div>
       <br>
     </section>
-    <section *ngIf="objectLength">
+    <section *ngIf="file">
       <h3><strong>Detalle del archivo.</strong></h3>
       <p><strong>Name:</strong> {{file.name}}</p>
       <p><strong>Size:</strong> {{file.size}}</p>
@@ -44,7 +44,50 @@
       <br>
     </section>
     <section>
-      <h2>Result</h2>
+      <strong>Resultados del archivo.</strong>
+      <div class="table-container">
+        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>fullName</th>
+              <th>age</th>
+              <th>gender</th>
+              <th>ci</th>
+              <th>occupation</th>
+              <th>study</th>
+              <th>maritalStatus</th>
+              <th>economy</th>
+              <th>numberOfChildren</th>
+              <th>question01</th>
+              <th>question02</th>
+              <th>question03</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let ficha of fichas">
+              <td>{{ficha.date}}</td>
+              <td>{{ficha.fullName}}</td>
+              <td>{{ficha.age}}</td>
+              <td>{{ficha.gender}}</td>
+              <td>{{ficha.ci}}</td>
+              <td>{{ficha.occupation}}</td>
+              <td>{{ficha.study}}</td>
+              <td>{{ficha.maritalStatus}}</td>
+              <td>{{ficha.economy }}</td>
+              <td>{{ficha.numberOfChildren}}</td>
+              <td>{{ficha.question01}}</td>
+              <td>{{ficha.question02}}</td>
+              <td>{{ficha.question03}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+    </section>
+    <section>
+      <strong>Resultados del archivo.</strong>
       <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
         <thead>
           <tr>
