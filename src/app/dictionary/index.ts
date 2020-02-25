@@ -19,3 +19,8 @@ export enum CASIT {
   'bastantes veces' = 4,
   'siempre o casi siempre' = 5
 }
+
+export enum FILETYPE {
+  parent,
+  children
+}
