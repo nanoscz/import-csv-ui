@@ -74,11 +74,8 @@ export class AppComponent {
 
   matchData(dataSourceParent: Array<any>, dataSourceChildren: Array<any>) {
     let dataAll = []
-    
     dataAll = dataSourceParent.map(parent => {
-      // console.log(parent)
       let children = dataSourceChildren.filter(children => parent.ci == children.ci);
-      // console.log(children);
       parent.children = children;
       return parent;
     });
