@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { DemographicSocioData } from './models';
-import { Settings } from './config';
+import { Settings, Questionnaire } from './config';
+import { IDARE, REVERSE_IDARE } from './dictionary';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,7 @@ export class AppComponent {
   file: any;
   demographicSocioHeader = Settings.fichas.demographicSocioHeader;
   fichas: Array<DemographicSocioData>
-  constructor() { }
+  constructor() {}
 
   isValidCSVFile(file: any) {
 
@@ -37,10 +38,11 @@ export class AppComponent {
       reader.readAsText(input.files[0]);
       reader.onload = () => {
         const csvData = reader.result;
-        const csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
+        let csvRecordsArray:any = (<string>csvData).split(/\r\n|\n/);
         csvRecordsArray.splice(0, 1);
         this.fichas = this.getDataDemographicSocioArrayFromCSVFile(csvRecordsArray);
-        console.log('fichas', this.fichas);
+        this.fichas = this.assessAnxiety(this.fichas);
+        console.log(this.fichas)
       };
       reader.onerror = function () {
         console.log('error is occured while reading file!');
@@ -50,6 +52,22 @@ export class AppComponent {
       alert("Please import valid .csv file.");
       this.fileReset();
     }
+  }
+
+  getQuestionnaireResult(questionnaire: any) {
+    const points = questionnaire.map(question => question.point);
+    return points.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue;
+    });
+  }
+  
+  assessAnxiety(fichas: any) {
+    const data = fichas.map(data => {
+      let newData = {...data};
+      newData.points = this.getQuestionnaireResult(newData.questionnaire);
+      return newData;
+    });
+    return data
   }
 
   getheaderDemographicSocio(headerArray: any) {
@@ -74,10 +92,31 @@ export class AppComponent {
         numberOfChildren: currentFicha[9].trim(),
         question01: currentFicha[10].trim(),
         question02: currentFicha[11].trim(),
-        question03: currentFicha[12].trim()
+        question03: currentFicha[12].trim(),
+        questionnaire: this.generateQuestions(currentFicha)
       }
     });
     return demographicSocioData;
+  }
+
+  generateQuestions(ficha: any) {
+    let answers = [];
+    answers = Questionnaire.map((question, idx) => {
+      let i = idx + 1;
+      let index = question[`question${i}`].index;
+      let reply = ficha[index];
+      let type = question[`question${i}`].type;
+      let code = question[`question${i}`].code;
+      return {
+        code,
+        index,
+        reply,
+        verify: i === code ? 'success' : 'fail',
+        question: question[`question${i}`].question,
+        point: type ? IDARE[reply] : REVERSE_IDARE[reply]
+      }
+    });
+    return answers;
   }
 
   getHeaderArray(csvRecordsArr: any) {

@@ -62,6 +62,8 @@
               <th>{{demographicSocioHeader.question01}}</th>
               <th>{{demographicSocioHeader.question02}}</th>
               <th>{{demographicSocioHeader.question03}}</th>
+              <th>{{demographicSocioHeader.points}}</th>
+              <th>{{demographicSocioHeader.anxiety}}</th>
             </tr>
           </thead>
 
@@ -80,6 +82,8 @@
               <td>{{ficha.question01}}</td>
               <td>{{ficha.question02}}</td>
               <td>{{ficha.question03}}</td>
+              <td>{{ficha.points}}</td>
+              <td>{{ficha.points|calculateAnxiety}}</td>
             </tr>
           </tbody>
         </table>
