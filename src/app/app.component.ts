@@ -12,8 +12,8 @@ export class AppComponent {
   @ViewChild('csvReader') csvReader: any;
 
   title = 'import-csv-ui';
-  subtitle = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices 
-              eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate 
+  subtitle = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices
+              eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate
               semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.`;
   file: any;
   displayedColumns: string[] = DataKeyDemographicSocio;
@@ -23,7 +23,7 @@ export class AppComponent {
   constructor() { }
 
   isValidCSVFile(file: any) {
-    return file.name.endsWith(".csv");
+    return file.name.endsWith('.csv');
   }
 
   getFileData(file: any) {
@@ -51,18 +51,18 @@ export class AppComponent {
   async uploadListener($event) {
     const files = $event.srcElement.files;
     if (files.length > 2) {
-      alert("Solo se debe cargar dos archivos.");
+      alert('Solo se debe cargar dos archivos.');
       this.fileReset();
       return;
-    };
+    }
     const [fileParent, fileChildren] = this.getFatherAndSonFiles(files);
     this.getFileData(fileParent);
 
     if (this.isValidCSVFile(fileParent)) {
-      this.dataSourceParent = await <any>this.readFileParent(fileParent);
-      
+      this.dataSourceParent = await this.readFileParent(fileParent) as any;
+
     } else {
-      alert("Please import valid .csv file.");
+      alert('Please import valid .csv file.');
       this.fileReset();
     }
   }
@@ -74,17 +74,17 @@ export class AppComponent {
       reader.onload = () => {
         const csvData = reader.result;
         let fileResult = null;
-        let csvRecordsArray: any = (<string>csvData).split(/\r\n|\n/);
+        const csvRecordsArray: any = (csvData as string).split(/\r\n|\n/);
         csvRecordsArray.splice(0, 1);
         fileResult = this.getDataIDAREFromCSVFile(csvRecordsArray);
         fileResult = this.assessAnxiety(fileResult);
-        console.log('dataResourceParent',fileResult);
+        console.log('dataResourceParent', fileResult);
         resolve(fileResult);
       };
-      reader.onerror = function () {
+      reader.onerror = function() {
         const msg = 'error is occured while reading file!';
         console.error(msg);
-        reject(msg)
+        reject(msg);
       };
     });
   }
@@ -98,11 +98,11 @@ export class AppComponent {
 
   assessAnxiety(fichas: any) {
     const data = fichas.map(data => {
-      let newData = { ...data };
+      const newData = { ...data };
       newData.points = this.getQuestionnaireResult(newData.questionnaire);
       return newData;
     });
-    return data
+    return data;
   }
 
   getheaderDemographicSocio(headerArray: any) {
@@ -112,7 +112,7 @@ export class AppComponent {
   getDataIDAREFromCSVFile(csvRecordsArray: any) {
     let demographicSocioData: Array<DemographicSocioData>;
     demographicSocioData = csvRecordsArray.map(item => {
-      const ficha = (<string>item).split(',');
+      const ficha = (item as string).split(',');
       const currentFicha = ficha.map(item => item.replace(/(")/g, ''));
       return {
         date: currentFicha[0].trim(),
@@ -131,7 +131,7 @@ export class AppComponent {
         question04: currentFicha[13].trim(),
         question05: currentFicha[14].trim(),
         questionnaire: this.generateQuestions(currentFicha)
-      }
+      };
     });
     return demographicSocioData;
   }
@@ -139,11 +139,11 @@ export class AppComponent {
   generateQuestions(ficha: any) {
     let answers = [];
     answers = Questionnaire.map((question, idx) => {
-      let i = idx + 1;
-      let index = question[`question${i}`].index;
-      let reply = ficha[index];
-      let type = question[`question${i}`].type;
-      let code = question[`question${i}`].code;
+      const i = idx + 1;
+      const index = question[`question${i}`].index;
+      const reply = ficha[index];
+      const type = question[`question${i}`].type;
+      const code = question[`question${i}`].code;
       return {
         code,
         index,
@@ -151,14 +151,14 @@ export class AppComponent {
         verify: i === code ? 'success' : 'fail',
         question: question[`question${i}`].question,
         point: type ? IDARE[reply] : REVERSE_IDARE[reply]
-      }
+      };
     });
     return answers;
   }
 
   getHeaderArray(csvRecordsArr: any) {
-    let headers = (<string>csvRecordsArr[0]).split(',');
-    let headerArray = [];
+    const headers = (csvRecordsArr[0] as string).split(',');
+    const headerArray = [];
     for (let j = 0; j < headers.length; j++) {
       headerArray.push(headers[j]);
     }
@@ -166,7 +166,7 @@ export class AppComponent {
   }
 
   fileReset() {
-    this.csvReader.nativeElement.value = "";
-    this.dataSourceParent = []
+    this.csvReader.nativeElement.value = '';
+    this.dataSourceParent = [];
   }
 }

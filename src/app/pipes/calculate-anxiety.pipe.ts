@@ -13,13 +13,13 @@ export class CalculateAnxietyPipe implements PipeTransform {
   calculateAnxiety(value) {
     let response = 'Fail';
     if (value <= 30) {
-      response = 'Bajo'
+      response = 'Bajo';
     }
     if (value > 30 && value < 44) {
-      response = 'Medio'
+      response = 'Medio';
     }
     if (value >= 45) {
-      response = 'Alto'
+      response = 'Alto';
     }
     // switch (value) {
     //   case (value <= 30):

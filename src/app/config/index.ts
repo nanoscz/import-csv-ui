@@ -20,14 +20,14 @@ export const Settings = {
       anxiety: 'Ansiedad'
     }
   }
-}
+};
 
 function getValueObject(object) {
-  let display = []
+  const display = [];
   for (const key in object) {
     if (object.hasOwnProperty(key)) {
       const element = object[key];
-      display.push(element)
+      display.push(element);
     }
   }
   return display;
